@@ -15,6 +15,9 @@
    - SQLAlchemy, Pydantic 을 내부적으로 사용
 
 
+## SQLAlchemy
+ - [SQLAlchemy ORM Basic](https://medium.com/fenderi/sqlalchemy-orm-39fd6b9d143d)
+
 ## Redis(Remote Dictionary Server)
  - Memory Key, Value DB
  - Op : SET, GET, DEL, EXISTS, MGET, EXPIRE, LPUSH, LPOP
@@ -56,10 +59,19 @@ Geo: 위치 기반 데이터 처리 (e.g. 반경 내 맛집 검색)
 
  [FastAPI Study Diary (2) — How to Attach VSCode Debugger to Running FastAPI Code on Docker Container](https://medium.com/@mizutori/fastapi-study-diary-2-how-to-attach-vscode-debugger-to-running-fastapi-code-on-docker-container-cc3c91fd9246)
 
+ [youtube - Debugging python applications inside k8s environment](https://www.youtube.com/watch?v=U4KmTNO5pY8)
+ [k8s doc - Debug Init Containers](http://kubernetes.io/docs/tasks/debug/debug-application/debug-init-containers/)
+
 
 ## Docker
  [Play with Docker Classroom](https://training.play-with-docker.com/) 
- 
+
+## Git
+
+ [Git Introduction](https://git.mikeward.org/)
+ [Git Tips](https://github.com/mingrammer/git-tips)
+ [Learn Git Branching](https://learngitbranching.js.org/?locale=ko)
+
 ## etc
 
  [FastApi Code snippet](https://github.com/kevinliao852/fastapi-snippet)

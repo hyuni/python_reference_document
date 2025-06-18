@@ -1,0 +1,19 @@
+
+# mypy 설정
+[mypy]
+python_version = 3.8
+ignore_missing_imports = True
+strict = True
+
+
+# black 설정 
+[tool.black]
+line-length = 79
+target-version = ['py38']
+skip-string-normalization = true
+
+
+# isort 설정
+[tool.isort]
+profile = "black"
+line_length = 79
