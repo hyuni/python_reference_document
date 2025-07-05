@@ -1,0 +1,27 @@
+package {{basePackage}}.controller;
+
+import {{basePackage}}.dto.{{capitalizedDomainName}}DTO;
+import {{basePackage}}.service.{{capitalizedDomainName}}Service;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/{{lowerCaseDomainName}}s")
+@RequiredArgsConstructor
+public class {{capitalizedDomainName}}Controller {
+
+    private final {{capitalizedDomainName}}Service {{lowerCaseDomainName}}Service;
+
+    @PostMapping
+    public ResponseEntity<{{capitalizedDomainName}}DTO> create{{capitalizedDomainName}}(@RequestBody {{capitalizedDomainName}}DTO {{lowerCaseDomainName}}DTO) {
+        // TODO: 구현
+        return ResponseEntity.ok({{lowerCaseDomainName}}Service.save({{lowerCaseDomainName}}DTO));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<{{capitalizedDomainName}}DTO> get{{capitalizedDomainName}}ById(@PathVariable Long id) {
+        // TODO: 구현
+        return ResponseEntity.ok({{lowerCaseDomainName}}Service.findById(id));
+    }
+}
