@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand("spring-boot-domain-generator.generateDomains", 
 		async (uri: vscode.Uri) => {
 			const DomainName = await vscode.window.showInputBox({
-				prompt: '생성할 컴포넌트의 이름을 입력하세요 (예: Product)',
+				prompt: '생성할 도메인 이름을 입력하세요 (예: Product)',
 				placeHolder: "ex) Product",
 				validateInput: (value: string) => {
 					if (!value) {
@@ -25,7 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			if (DomainName) {
 				const capitalizedDomainName = DomainName.charAt(0).toUpperCase() + DomainName.slice(1);
-        		const lowerCaseDomainName = DomainName.charAt(0).toLowerCase() + DomainName.slice(1);
+        		const lowerCaseDomainName = DomainName.toLowerCase();
 
 				// 2. basePackagePath 결정:
 				//    - Explorer에서 호출된 경우: 선택된 폴더의 경로를 사용
@@ -54,7 +54,9 @@ export function activate(context: vscode.ExtensionContext) {
 				// 선택된 경로에서 'src/main/java' 부분을 찾아 그 다음부터의 경로를 basePackage로 사용
 				// 예: /path/to/myproject/src/main/java/com/example/demo -> com.example.demo
 				let basePackagePath: string | undefined;
+				
 				const javaRootIndex = selectedPath.indexOf(path.join('src', 'main', 'java'));
+				
 				
 				if (javaRootIndex !== -1) {
 					const packageRelativePath = selectedPath.substring(javaRootIndex + path.join('src', 'main', 'java').length + 1);
@@ -66,15 +68,21 @@ export function activate(context: vscode.ExtensionContext) {
 
 				const packageFolder = path.join(selectedPath, ...basePackagePath.split('.'));
 				const rootJavaPath = path.join(selectedPath.substring(0, javaRootIndex + path.join('src', 'main', 'java').length));				
+				const rootResourcePath = path.join(selectedPath.substring(0, javaRootIndex + path.join('src', 'main').length), 'resources');				
 
 				// 3. 템플릿 파일 경로 설정 및 읽기
 				const templateDir = path.join(context.extensionPath, 'templates'); // 확장의 'templates' 폴더 경로
 				
-				const fileTypes = ['DTO', 'Entity', 'Controller', 'Service', 'Repository'];
+				const fileTypes = ['DTO', 'Entity', 'Controller', 'Service', 'Mapper', 'MapperXML'];
 				const fileContents: { [key: string]: string } = {};
 
 				for (const type of fileTypes) {
-					const templateFilePath = path.join(templateDir, `${type}.java.hbs`);
+					const isXML = type.toLowerCase().includes("xml");
+					
+					const file = isXML ? `${type}.xml.hbs` : `${type}.java.hbs`;
+					
+					const templateFilePath = path.join(templateDir, file);
+					
 					try {
 						let content = fs.readFileSync(templateFilePath, 'utf8');
 						// 템플릿 변수 치환
@@ -89,11 +97,12 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 				
 				const filePaths = {
-					'DTO': path.join(rootJavaPath, ...basePackagePath.split('.'), DomainName, `${capitalizedDomainName}DTO.java`),
-					'Entity': path.join(rootJavaPath, ...basePackagePath.split('.'), DomainName, `${capitalizedDomainName}.java`),
-					'Controller': path.join(rootJavaPath, ...basePackagePath.split('.'), DomainName, `${capitalizedDomainName}Controller.java`),
-					'Service': path.join(rootJavaPath, ...basePackagePath.split('.'), DomainName, `${capitalizedDomainName}Service.java`),
-					'Repository': path.join(rootJavaPath, ...basePackagePath.split('.'), DomainName, `${capitalizedDomainName}Repository.java`)
+					'DTO': path.join(rootJavaPath, ...basePackagePath.split('.'), DomainName.toLowerCase(), `${capitalizedDomainName}DTO.java`),
+					'Entity': path.join(rootJavaPath, ...basePackagePath.split('.'), DomainName.toLowerCase(), `${capitalizedDomainName}.java`),
+					'Controller': path.join(rootJavaPath, ...basePackagePath.split('.'), DomainName.toLowerCase(), `${capitalizedDomainName}Controller.java`),
+					'Service': path.join(rootJavaPath, ...basePackagePath.split('.'), DomainName.toLowerCase(), `${capitalizedDomainName}Service.java`),
+					'Mapper': path.join(rootJavaPath, ...basePackagePath.split('.'), DomainName.toLowerCase(), `${capitalizedDomainName}Mapper.java`),
+					'MapperXML': path.join(rootResourcePath, 'mapper', `${capitalizedDomainName}Mapper.xml`)
 				};
 
 				// 4. 파일 생성

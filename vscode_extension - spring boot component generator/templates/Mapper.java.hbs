@@ -1,0 +1,9 @@
+package {{basePackage}}.{{lowerCaseDomainName}};
+
+import {{basePackage}}.{{lowerCaseDomainName}}.{{capitalizedDomainName}}DTO;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface {{capitalizedDomainName}}Mapper {
+    List<{{capitalizedDomainName}}DTO> select{{capitalizedDomainName}}List();
+}

@@ -1,8 +1,8 @@
-package {{basePackage}}.service;
+package {{basePackage}}.{{lowerCaseDomainName}};
 
-import {{basePackage}}.dto.{{capitalizedDomainName}}DTO;
-import {{basePackage}}.entity.{{capitalizedDomainName}};
-import {{basePackage}}.repository.{{capitalizedDomainName}}Repository;
+import {{basePackage}}.{{lowerCaseDomainName}}.{{capitalizedDomainName}}DTO;
+import {{basePackage}}.{{lowerCaseDomainName}}.{{capitalizedDomainName}}Entity;
+import {{basePackage}}.{{lowerCaseDomainName}}.{{capitalizedDomainName}}Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,26 +10,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class {{capitalizedDomainName}}Service {
 
-    private final {{capitalizedDomainName}}Repository {{lowerCaseDomainName}}Repository;
+    private final {{capitalizedDomainName}}Mapper {{lowerCaseDomainName}}Mapper;
 
-    public {{capitalizedDomainName}}DTO save({{capitalizedDomainName}}DTO dto) {
-        // TODO: DTO -> Entity 변환 및 저장 로직 구현
-        {{capitalizedDomainName}} entity = new {{capitalizedDomainName}}(); // 예시
-        entity.setName(dto.getName()); // 예시
-        {{capitalDomainName}} savedEntity = {{lowerCaseDomainName}}Repository.save(entity);
-        dto.setId(savedEntity.getId()); // 예시
-        return dto;
-    }
-
-    public {{capitalizedDomainName}}DTO findById(Long id) {
-        // TODO: ID로 엔티티 찾기 및 Entity -> DTO 변환 로직 구현
-        return {{lowerCaseDomainName}}Repository.findById(id)
-                                    .map(entity -> {
-                                        {{capitalizedDomainName}}DTO dto = new {{capitalizedDomainName}}DTO();
-                                        dto.setId(entity.getId());
-                                        dto.setName(entity.getName());
-                                        return dto;
-                                    })
-                                    .orElse(null); // 적절한 예외 처리 필요
+    public List<{{capitalizedDomainName}}DTO> get{{capitalizedDomainName}}List() {
+        return {{lowerCaseDomainName}}Mapper.select{{capitalizedDomainName}}List();
     }
 }

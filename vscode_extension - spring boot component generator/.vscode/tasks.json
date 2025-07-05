@@ -35,6 +35,13 @@
 				"npm: watch-tests"
 			],
 			"problemMatcher": []
+		},
+		{
+			"type": "npm",
+			"script": "pretest",
+			"problemMatcher": [],
+			"label": "npm: pretest",
+			"detail": "npm run compile-tests && npm run compile && npm run lint"
 		}
 	]
 }
